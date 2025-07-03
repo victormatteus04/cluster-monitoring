@@ -1,0 +1,85 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// ============================================================================
+// CONFIGURAÇÕES DE REDE
+// ============================================================================
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
+#define MQTT_SERVER ""
+#define MQTT_PORT 1883
+
+// ============================================================================
+// CONFIGURAÇÕES DO SENSOR
+// ============================================================================
+#define DHTPIN 26
+#define DHTTYPE DHT22
+#define SENSOR_READ_INTERVAL 2000  // 2 segundos
+#define SENSOR_RETRY_COUNT 3
+
+// ============================================================================
+// CONFIGURAÇÕES MQTT
+// ============================================================================
+#define MQTT_KEEPALIVE_CUSTOM 60  // Renomeado para evitar conflito
+#define MQTT_RECONNECT_DELAY 5000
+#define MQTT_MAX_RECONNECT_ATTEMPTS 10
+
+// ============================================================================
+// CONFIGURAÇÕES DE LOGGING
+// ============================================================================
+#define SERIAL_BAUD_RATE 9600
+#define DEBUG_MODE true
+
+// ============================================================================
+// CONFIGURAÇÕES DE ALERTA
+// ============================================================================
+#define TEMP_ALERT_THRESHOLD 27.0
+#define HUMIDITY_MIN_THRESHOLD 30.0
+#define HUMIDITY_MAX_THRESHOLD 70.0
+#define TEMP_VARIATION_THRESHOLD 5.0
+
+// ============================================================================
+// CONFIGURAÇÕES DE WATCHDOG
+// ============================================================================
+#define WATCHDOG_TIMEOUT 30000  // 30 segundos
+#define WIFI_TIMEOUT 10000      // 10 segundos
+
+// ============================================================================
+// MACROS DE DEBUG (Renomeados para evitar conflitos)
+// ============================================================================
+#ifdef DEBUG_MODE
+    #define CLUSTER_DEBUG_PRINT(x) Serial.print(x)
+    #define CLUSTER_DEBUG_PRINTLN(x) Serial.println(x)
+    #define CLUSTER_DEBUG_PRINTF(fmt, ...) Serial.printf(fmt, ##__VA_ARGS__)
+#else
+    #define CLUSTER_DEBUG_PRINT(x)
+    #define CLUSTER_DEBUG_PRINTLN(x)
+    #define CLUSTER_DEBUG_PRINTF(fmt, ...)
+#endif
+
+// ============================================================================
+// ESTRUTURAS DE DADOS
+// ============================================================================
+struct SensorData {
+    float temperature;
+    float humidity;
+    unsigned long timestamp;
+    bool is_valid;
+};
+
+struct SystemStatus {
+    bool wifi_connected;
+    bool mqtt_connected;
+    unsigned long last_sensor_read;
+    unsigned long uptime;
+    int reconnect_attempts;
+};
+
+// ============================================================================
+// CONSTANTES
+// ============================================================================
+#define JSON_BUFFER_SIZE 200
+#define MAX_TOPIC_LENGTH 50
+#define MAX_PAYLOAD_LENGTH 150
+
+#endif // CONFIG_H 

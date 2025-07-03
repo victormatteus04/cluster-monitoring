@@ -1,0 +1,6 @@
+backend/prometheus/data/*
+backend/mosquitto/data/*
+backend/mosquitto/log/*
+alerting/data/*
+logs
+backups

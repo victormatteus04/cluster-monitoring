@@ -1,0 +1,47 @@
+# ============================================================================
+# REGRAS DE ALERTA - PROMETHEUS
+# Monitoramento Inteligente de Clusters - IF-UFG
+# ============================================================================
+
+groups:
+  - name: cluster_alerts
+    rules:
+      # Alerta de temperatura alta
+      - alert: HighTemperature
+        expr: cluster_temperature_celsius > 27
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Temperatura alta detectada"
+          description: "Sensor {{ $labels.esp_id }} está com temperatura {{ $value }}°C"
+
+      # Alerta de temperatura crítica
+      - alert: CriticalTemperature
+        expr: cluster_temperature_celsius > 35
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Temperatura crítica detectada"
+          description: "Sensor {{ $labels.esp_id }} está com temperatura crítica {{ $value }}°C"
+
+      # Alerta de sensor offline
+      - alert: SensorOffline
+        expr: cluster_sensor_status == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Sensor offline"
+          description: "Sensor {{ $labels.esp_id }} está offline há mais de 5 minutos"
+
+      # Alerta de variação brusca de temperatura
+      - alert: TemperatureVariation
+        expr: cluster_temperature_variation_celsius > 5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Variação brusca de temperatura"
+          description: "Sensor {{ $labels.esp_id }} teve variação de {{ $value }}°C"

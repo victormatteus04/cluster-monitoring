@@ -1,0 +1,19 @@
+# Arquivos temporários
+*.tmp
+*.log
+*.pid
+
+# Arquivos de cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
